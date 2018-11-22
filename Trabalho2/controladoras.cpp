@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <stdexcept>
 
 #include "../Trabalho1/dominios.h"
@@ -12,6 +13,8 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
   Identificador identificador;
   Senha         senha;
 
+  system("clear || cls");
+  
   while(true) {
     cout << endl << "Faça seu login:" << endl << endl;
 
@@ -34,7 +37,7 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
   bool resultado = servidor->autenticar(identificador, senha);
 
   if(resultado == false)
-    cout << "Falha na autenticação" << endl;
+    cout << "Falha na autenticação" << endl << endl;
 
   return resultado;
 }
@@ -42,6 +45,8 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
 void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
   int opcao;
   Cmd * comando;
+
+  system("clear || cls");
 
   if((*autenticado) == false){
     comando = new CmdCadastrar();
@@ -52,15 +57,15 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
 
   while(true){
     // Apresentar as opções.
-
-    cout << endl << "Gerenciamento de Opções." << endl << endl;
+    cout << endl << "Gerenciamento de Opções:" << endl << endl;
 
     cout << EDITAR       << " - Editar"        << endl;
     cout << DESCADASTRAR << " - Descadastrar"  << endl;
-    cout << RETORNAR     << " - Retornar"      << endl << endl;
+    cout << LOGOUT       << " - Logout"      << endl << endl;
     cout << "Selecione uma opção: ";
 
     cin >> opcao;
+    getchar();
 
     switch(opcao){
       case EDITAR:   
@@ -76,12 +81,13 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
         break;
 
       default:
-        if(opcao != RETORNAR)
+        if(opcao != LOGOUT)
           cout << endl << "Escolha uma opção válida!" << endl;
         break; 
     }
 
-    if(opcao == RETORNAR || opcao == DESCADASTRAR){
+    if(opcao == LOGOUT || opcao == DESCADASTRAR){
+      (*autenticado) = false;
       break;
     }
 

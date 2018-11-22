@@ -37,7 +37,7 @@ private:
   const static int CADASTRAR    = 1;
   const static int EDITAR       = 2;
   const static int DESCADASTRAR = 3;
-  const static int RETORNAR     = 4;
+  const static int LOGOUT       = 4;
   
   ISerUsuario * servidor;
 };

@@ -14,7 +14,7 @@ bool StubSerAutenticacao::autenticar(const Identificador &id, const Senha &senha
   bool resultado;
 
   // Apresentar dados recebidos.
-
+  system("clear || cls");
   cout << endl << "StubSerAutenticacao::autenticar"     << endl;
   cout << "Identificador  = " << id.getIdentificador()  << endl;
   cout << "Senha          = " << senha.getSenha()       << endl;
@@ -36,17 +36,84 @@ bool StubSerAutenticacao::autenticar(const Identificador &id, const Senha &senha
   return resultado;
 }
 
-const int StubSerUsuario::TRIGGER_FALHA;
-const int StubSerUsuario::TRIGGER_ERRO_SISTEMA;
+const string StubSerUsuario::TRIGGER_FALHA_CADASTRO     = "lucas";
+const string StubSerUsuario::TRIGGER_FALHA_EDICAO       = "12!@abCE";
+const string StubSerUsuario::TRIGGER_FALHA_DESCADASTRO  = "abcdf";
+const string StubSerUsuario::TRIGGER_ERRO_SISTEMA       = "edcba";
 
 bool StubSerUsuario::cadastrar(const Usuario &usuario){
-  return true;
+  bool          resultado;
+  Nome          nome          = usuario.getNome();
+  Identificador identificador = usuario.getIdentificador();
+  Senha         senha         = usuario.getSenha();
+
+  // Apresentar dados recebidos.
+  system("clear || cls");
+  cout << "StubSerUsuario::cadastrar" << endl ;
+  cout << "Nome          = " << nome.getNome()                   << endl;
+  cout << "Identificador = " << identificador.getIdentificador() << endl;
+  cout << "Senha         = " << senha.getSenha()                 << endl;
+
+  // Diferentes comportamentos dependendo do valor da matrícula.
+
+  if(nome.getNome() == TRIGGER_FALHA_CADASTRO)
+    resultado = false;
+
+  else if(identificador.getIdentificador() == TRIGGER_ERRO_SISTEMA)
+    throw runtime_error("Erro de sistema");
+
+  else
+    resultado = true;
+
+  return resultado;
 }
 
 bool StubSerUsuario::editar(const Identificador * id, const Usuario &usuario){
-  return true;
+  bool          resultado;
+  Nome          nome          = usuario.getNome();
+  Identificador identificador = usuario.getIdentificador();
+  Senha         senha         = usuario.getSenha();
+
+  // Apresentar dados recebidos.
+  system("clear || cls");
+  cout << "StubSerUsuario::editar" << endl;
+  cout << "Identificador Antigo = " << id->getIdentificador()     << endl;
+  cout << "Novo Nome            = " << nome.getNome()                   << endl;
+  cout << "Novo Identificador   = " << identificador.getIdentificador() << endl;
+  cout << "Nova Senha           = " << senha.getSenha()                 << endl;
+
+  // Diferentes comportamentos dependendo do valor da matrícula.
+
+  if(senha.getSenha() == TRIGGER_FALHA_EDICAO)
+    resultado = false;
+
+  else if(identificador.getIdentificador() == TRIGGER_ERRO_SISTEMA)
+    throw runtime_error("Erro de sistema");
+
+  else
+    resultado = true;
+
+  return resultado;
 }
 
 bool StubSerUsuario::descadastrar(const Identificador * id){
-  return true;
+  bool resultado;
+
+  // Apresentar dados recebidos.
+  system("clear || cls");
+  cout << "StubSerUsuario::descadastrar" << endl ;
+  cout << "Identificador = " << id->getIdentificador() << endl;
+
+  // Diferentes comportamentos dependendo do valor da matrícula.
+
+  if(id->getIdentificador() == TRIGGER_FALHA_DESCADASTRO)
+    resultado = false;
+
+  else if(id->getIdentificador() == TRIGGER_ERRO_SISTEMA)
+    throw runtime_error("Erro de sistema");
+
+  else
+    resultado = true;
+
+  return resultado;
 }

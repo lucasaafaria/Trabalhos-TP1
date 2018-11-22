@@ -1,7 +1,6 @@
 #include "comandos.h"
 
 #include <iostream>
-#include <cstdio>
 
 using namespace std;
 
@@ -16,16 +15,16 @@ void CmdCadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * a
   Usuario *     usuario;
 
   // Código de interação com o usuário.
+  system("clear || cls");
   cout << "Olá! Vamos prosseguir ao seu cadastramento:" << endl << endl;
   
   while(true){
     try{
-      getchar();
       cout << "Digite seu nome: ";
       getline(cin, entrada);
       nome.setNome(entrada);
       cout << endl;
-      
+
       cout << "Escolha um identificador de 5 letras: ";
       getline(cin, entrada);
       identificador.setIdentificador(entrada);
@@ -39,7 +38,7 @@ void CmdCadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * a
       break;
     }
     catch(invalid_argument &exp){
-      cout << "Dados com formato incorreto" << endl;
+      cout << "Dados com formato incorreto" << endl << endl;
     }
   }
 
@@ -49,11 +48,11 @@ void CmdCadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * a
   resultado = servidor->cadastrar(*usuario);
 
   if(resultado == true){
-    cout << "Usuário cadastrado com sucesso!" << endl;
+    cout << "Usuário cadastrado com sucesso!" << endl << endl;
     id->setIdentificador(identificador.getIdentificador());
     (*autenticado) = true;
   } else{
-    cout << "Falha no cadastramento!" << endl;
+    cout << "Falha no cadastramento!" << endl << endl;
   }
 }
 
@@ -68,6 +67,7 @@ void CmdEditar::executar(ISerUsuario * servidor, Identificador * id, bool * aute
   Usuario *     usuario;
 
   // Código de interação com o usuário.
+  system("clear || cls");
   cout << "Olá! Informe os seus novos dados:" << endl << endl;
 
   while(true){
@@ -90,7 +90,7 @@ void CmdEditar::executar(ISerUsuario * servidor, Identificador * id, bool * aute
       break;
     }
     catch(invalid_argument &exp){
-      cout << endl << "Dados em formato incorreto!" << endl;
+      cout << endl << "Dados em formato incorreto!" << endl << endl;
     }
   }
 
@@ -100,11 +100,11 @@ void CmdEditar::executar(ISerUsuario * servidor, Identificador * id, bool * aute
   resultado = servidor->editar(id, *usuario);
 
   if(resultado == true){
-    cout << "Dados editados com sucesso!" << endl;
+    cout << "Dados editados com sucesso!" << endl << endl;
     id->setIdentificador(identificador.getIdentificador());
     (*autenticado) = true;
   } else{
-    cout << "Falha ao tentar editar os dados!" << endl;
+    cout << "Falha ao tentar editar os dados!" << endl << endl;
   }
 }
 
@@ -115,6 +115,7 @@ void CmdDescadastrar::executar(ISerUsuario * servidor, Identificador * id, bool 
   int   opcao;
 
   // Código de interação com o usuário.
+  system("clear || cls");
   cout << "Olá! Você realmente deseja descadastrar-se do sistema?" << endl;
   cout << "\t1 - Sim" << endl;
   cout << "\t2 - Não" << endl;
@@ -129,10 +130,10 @@ void CmdDescadastrar::executar(ISerUsuario * servidor, Identificador * id, bool 
   resultado = servidor->descadastrar(id);
 
   if(resultado == true) {
-    cout << "Usuario descadastrado com sucesso!" << endl;
+    cout << "Usuario descadastrado com sucesso!" << endl << endl;
     (*autenticado) = false;
   } else {
-    cout << "Falha no descadastramento!" << endl;
+    cout << "Falha no descadastramento!" << endl << endl;
   }
   
 }

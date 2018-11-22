@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cstdio>
 #include <stdexcept>
 
 #include "../Trabalho1/dominios.h"
@@ -28,6 +29,8 @@ int main() {
   ctrlAutenticacao->setServidor(stubAutenticacao);
   ctrlUsuario->setServidor(stubUsuario);
 
+  system("clear || cls");
+
   while(true) {
     cout << "Bem vindo ao sistema! O que você deseja fazer?" << endl;
     cout << "\t1 - Login"     << endl;
@@ -35,6 +38,7 @@ int main() {
     cout << "\t3 - Sair"      << endl << endl;
     cout << "Sua escolha: "; 
     cin >> escolha;
+    getchar();
 
     switch(escolha) {
       case LOGIN:
@@ -57,7 +61,7 @@ int main() {
       
       default:
         if(escolha != SAIR)
-          cout << "Escolha uma opção válida!" << endl;
+          cout << endl << "Escolha uma opção válida!" << endl << endl;
         break;
     }
 
