@@ -5,24 +5,28 @@
 #include "../Trabalho1/entidades.h"
 #include "interfaces.h"
 
-class CmdIncluir {
+class Cmd {
 public:
-  void executar(ISerUsuario * servidor);
+	virtual void executar(ISerUsuario * servidor, Identificador * id, bool * autenticado) = 0;
+	virtual ~Cmd(){}
 };
 
-class CmdExcluir {
+class CmdCadastrar:public Cmd {
 public:
-  void executar(ISerUsuario * servidor);
+  void executar(ISerUsuario * servidor, Identificador * id, bool * autenticado);
+  ~CmdCadastrar(){}
 };
 
-class CmdPesquisar {
+class CmdEditar:public Cmd {
 public:
-  void executar(ISerUsuario * servidor);
+  void executar(ISerUsuario * servidor, Identificador * id, bool * autenticado);
+  ~CmdEditar(){}
 };
 
-class CmdEditar {
-public:
-  void executar(ISerUsuario * servidor);
+class CmdDescadastrar:public Cmd {
+public: 
+  void executar(ISerUsuario * servidor, Identificador * id, bool * autenticado);
+  ~CmdDescadastrar(){}
 };
 
 #endif // COMANDOS_H_

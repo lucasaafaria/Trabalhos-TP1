@@ -4,11 +4,13 @@
 #include "../Trabalho1/dominios.h"
 #include "../Trabalho1/entidades.h"
 #include "controladoras.h"
+#include "stubs.h"
+#include "comandos.h"
 
 bool CtrlAprAutenticacao::autenticar(Identificador * id) {
-  string  entrada;
+  string        entrada;
   Identificador identificador;
-  Senha senha;
+  Senha         senha;
 
   while(true) {
     cout << endl << "Faça seu login:" << endl << endl;
@@ -29,69 +31,61 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
 
   id->setIdentificador(identificador.getIdentificador());
 
-  /* Para quando implementarmos o banco de dados:
-
   bool resultado = servidor->autenticar(identificador, senha);
 
   if(resultado == false)
     cout << "Falha na autenticação" << endl;
 
   return resultado;
-
-  */
-
-  return true;
 }
 
-void CtrlAprUsuario(Identificador * id) {
-  /*int opcao;
+void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
+  int opcao;
+  Cmd * comando;
+
+  if((*autenticado) == false){
+    comando = new CmdCadastrar();
+    comando->executar(servidor, id, autenticado);
+    delete comando;
+    return;
+  }
 
   while(true){
     // Apresentar as opções.
 
     cout << endl << "Gerenciamento de Opções." << endl << endl;
 
-    cout << "Incluir   - " << INCLUIR << endl;
-    cout << "Remover   - " << REMOVER << endl;
-    cout << "Pesquisar - " << PESQUISAR << endl;
-    cout << "Editar    - " << EDITAR << endl;
-    cout << "Retornar  - " << RETORNAR << endl << endl;
-    cout << "Selecione uma opcao :";
+    cout << EDITAR       << " - Editar"        << endl;
+    cout << DESCADASTRAR << " - Descadastrar"  << endl;
+    cout << RETORNAR     << " - Retornar"      << endl << endl;
+    cout << "Selecione uma opção: ";
 
     cin >> opcao;
 
     switch(opcao){
-      case INCLUIR:   
-        comando = new ComandoIUGerenteIncluir();
-        comando->executar(cntrLNGerente);
+      case EDITAR:   
+        comando = new CmdEditar();
+        comando->executar(servidor, id, autenticado);
         delete comando;
         break;
 
-      case REMOVER:   
-        comando = new ComandoIUGerenteRemover();
-        comando->executar(cntrLNGerente);
+      case DESCADASTRAR:   
+        comando = new CmdDescadastrar();
+        comando->executar(servidor, id, autenticado);
         delete comando;
         break;
 
-      case PESQUISAR: 
-        comando = new ComandoIUGerentePesquisar();
-        comando->executar(cntrLNGerente);
-        delete comando;
-        break;
-
-      case EDITAR:
-        comando = new ComandoIUGerenteEditar();
-        comando->executar(cntrLNGerente);
-        delete comando;
-        break;
+      default:
+        if(opcao != RETORNAR)
+          cout << endl << "Escolha uma opção válida!" << endl;
+        break; 
     }
 
-    if(opcao == RETORNAR){
+    if(opcao == RETORNAR || opcao == DESCADASTRAR){
       break;
     }
 
   }
 
-  return;*/
-  cout << "coe" << endl;
+  return;
 }

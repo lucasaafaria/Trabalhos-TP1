@@ -6,7 +6,7 @@
 
 class ISerAutenticacao {
 public:
-  virtual bool autenticar(Identificador id, Senha senha) = 0;
+  virtual bool autenticar(const Identificador &id, const Senha &senha) = 0;
   virtual ~ISerAutenticacao(){}
 };
 
@@ -18,12 +18,16 @@ public:
 };
 
 class ISerUsuario {
-  
+public:
+  virtual bool cadastrar(const Usuario&) = 0;
+  virtual bool editar(const Identificador*, const Usuario&) = 0;
+  virtual bool descadastrar(const Identificador*) = 0;
+  virtual ~ISerUsuario(){}
 };
 
 class IAprUsuario {
 public:
-  virtual void executar(Identificador * id) = 0;
+  virtual void executar(Identificador * id, bool * autenticado) = 0;
   virtual void setServidor(ISerUsuario * servidor) = 0;
   virtual ~IAprUsuario(){}
 };
