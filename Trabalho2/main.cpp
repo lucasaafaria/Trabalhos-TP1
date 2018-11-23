@@ -8,6 +8,8 @@
 #include "controladoras.h"
 #include "stubs.h"
 
+// Macros utilizados no menu de interação com o usuário
+
 #define LOGIN     1
 #define CADASTRAR 2
 #define SAIR      3
@@ -15,22 +17,30 @@
 using namespace std;
 
 int main() {
+  // Variáveis utilizadas na lógica do progama
   int escolha;
   bool resultado      = false;
   bool autenticado    = false;
+
+  // Guarda o identificador do usuário logado
   Identificador * id  = new Identificador();
 
+  // Instâncias das controladoras da camada de apresentação
   CtrlAprAutenticacao * ctrlAutenticacao  = new CtrlAprAutenticacao();
   CtrlAprUsuario      * ctrlUsuario       = new CtrlAprUsuario();
   
+  // Instâncias das stubs da camada de serviços
   StubSerAutenticacao * stubAutenticacao  = new StubSerAutenticacao();
   StubSerUsuario      * stubUsuario       = new StubSerUsuario();
 
+  // Estabelecimento de ligações entre controladoras e respectivas stubs
   ctrlAutenticacao->setServidor(stubAutenticacao);
   ctrlUsuario->setServidor(stubUsuario);
 
 
   while(true) {
+
+    // Interação com o usuário
     system("clear || cls");
     if(autenticado == true)
       cout << "ID do usuário logado: " << id->getIdentificador() << endl << endl;
@@ -70,6 +80,9 @@ int main() {
         break;
     }
 
+    // Caso o usuário se cadastre ou se autentique, ele será apresentado às
+    // ações que poderá realizar
+    
     if(autenticado == true){
       try {
         ctrlUsuario->executar(id, &autenticado);
