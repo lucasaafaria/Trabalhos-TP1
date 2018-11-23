@@ -2,13 +2,14 @@
 
 using namespace std;
 
-//Definições de constantes.
+// Definições de triggers de falha do módulo de autenticação.
 
 const string StubSerAutenticacao::TRIGGER_FALHA_ID     = "abcdf";
 const string StubSerAutenticacao::TRIGGER_ERRO_SISTEMA = "edcba";
 const string StubSerAutenticacao::TRIGGER_FALHA_SENHA  = "1!aB2@cE";
 
-// Definições de método da classe stub do controlador da lógica de negócio de autenticação.
+// --------------------------------------------------------------------------------------- //
+// Definição de método da classe stub do controlador da lógica de negócio de autenticação.
 
 bool StubSerAutenticacao::autenticar(const Identificador &id, const Senha &senha) {
   bool resultado;
@@ -19,7 +20,7 @@ bool StubSerAutenticacao::autenticar(const Identificador &id, const Senha &senha
   cout << "Identificador  = " << id.getIdentificador()  << endl;
   cout << "Senha          = " << senha.getSenha()       << endl;
 
-   // Diferentes comportamentos dependendo do valor da matrícula.
+  // Checa se algum dos dados recebidos ativa um trigger de falha
 
   if(id.getIdentificador() == TRIGGER_FALHA_ID)
     resultado = false;
@@ -36,12 +37,19 @@ bool StubSerAutenticacao::autenticar(const Identificador &id, const Senha &senha
   return resultado;
 }
 
+// --------------------------------------------------------------------------------------- //
+
+// Definições de triggers de falha do módulo de usuarios.
+
 const string StubSerUsuario::TRIGGER_FALHA_CADASTRO     = "lucas";
 const string StubSerUsuario::TRIGGER_FALHA_EDICAO       = "12!@abCE";
 const string StubSerUsuario::TRIGGER_FALHA_DESCADASTRO  = "abcdf";
 const string StubSerUsuario::TRIGGER_ERRO_SISTEMA       = "edcba";
 
-bool StubSerUsuario::cadastrar(const Usuario &usuario){
+// --------------------------------------------------------------------------------------- //
+// Definição de método que simula o comportamento de cadastrar um usuário
+
+bool StubSerUsuario::cadastrar(const Usuario &usuario) {
   bool          resultado;
   Nome          nome          = usuario.getNome();
   Identificador identificador = usuario.getIdentificador();
@@ -54,7 +62,7 @@ bool StubSerUsuario::cadastrar(const Usuario &usuario){
   cout << "Identificador = " << identificador.getIdentificador() << endl;
   cout << "Senha         = " << senha.getSenha()                 << endl;
 
-  // Diferentes comportamentos dependendo do valor da matrícula.
+  // Checa se algum dos dados recebidos ativa um trigger de falha
 
   if(nome.getNome() == TRIGGER_FALHA_CADASTRO)
     resultado = false;
@@ -67,6 +75,9 @@ bool StubSerUsuario::cadastrar(const Usuario &usuario){
 
   return resultado;
 }
+
+// --------------------------------------------------------------------------------------- //
+// Definição de método que simula o comportamento de editar os dados de um usuário
 
 bool StubSerUsuario::editar(const Identificador * id, const Usuario &usuario){
   bool          resultado;
@@ -82,7 +93,7 @@ bool StubSerUsuario::editar(const Identificador * id, const Usuario &usuario){
   cout << "Novo Identificador   = " << identificador.getIdentificador() << endl;
   cout << "Nova Senha           = " << senha.getSenha()                 << endl;
 
-  // Diferentes comportamentos dependendo do valor da matrícula.
+  // Checa se algum dos dados recebidos ativa um trigger de falha
 
   if(senha.getSenha() == TRIGGER_FALHA_EDICAO)
     resultado = false;
@@ -96,6 +107,9 @@ bool StubSerUsuario::editar(const Identificador * id, const Usuario &usuario){
   return resultado;
 }
 
+// --------------------------------------------------------------------------------------- //
+// Definição de método que simula o comportamento de descadastramento de usuário
+
 bool StubSerUsuario::descadastrar(const Identificador * id){
   bool resultado;
 
@@ -104,7 +118,7 @@ bool StubSerUsuario::descadastrar(const Identificador * id){
   cout << "StubSerUsuario::descadastrar" << endl ;
   cout << "Identificador = " << id->getIdentificador() << endl;
 
-  // Diferentes comportamentos dependendo do valor da matrícula.
+  // Checa se algum dos dados recebidos ativa um trigger de falha
 
   if(id->getIdentificador() == TRIGGER_FALHA_DESCADASTRO)
     resultado = false;
@@ -117,3 +131,5 @@ bool StubSerUsuario::descadastrar(const Identificador * id){
 
   return resultado;
 }
+
+// --------------------------------------------------------------------------------------- //
