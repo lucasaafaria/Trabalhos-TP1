@@ -29,9 +29,14 @@ int main() {
   ctrlAutenticacao->setServidor(stubAutenticacao);
   ctrlUsuario->setServidor(stubUsuario);
 
-  system("clear || cls");
 
   while(true) {
+    system("clear || cls");
+    if(autenticado == true)
+      cout << "ID do usuário logado: " << id->getIdentificador() << endl << endl;
+    else
+      cout << "Não há usuários logados no momento!" << endl << endl;
+
     cout << "Bem vindo ao sistema! O que você deseja fazer?" << endl;
     cout << "\t1 - Login"     << endl;
     cout << "\t2 - Cadastrar" << endl;

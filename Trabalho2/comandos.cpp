@@ -1,6 +1,7 @@
 #include "comandos.h"
 
 #include <iostream>
+#include <cstdio>
 
 using namespace std;
 
@@ -54,6 +55,9 @@ void CmdCadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * a
   } else{
     cout << "Falha no cadastramento!" << endl << endl;
   }
+
+  cout << "Pressione [Enter] para continuar >>";
+  getchar();
 }
 
 // Método por meio do qual é solicitada a execução do comando.
@@ -106,6 +110,9 @@ void CmdEditar::executar(ISerUsuario * servidor, Identificador * id, bool * aute
   } else{
     cout << "Falha ao tentar editar os dados!" << endl << endl;
   }
+
+  cout << "Pressione [Enter] para continuar >>";
+  getchar();
 }
 
 // Método por meio do qual é solicitada a execução do comando.
@@ -121,6 +128,7 @@ void CmdDescadastrar::executar(ISerUsuario * servidor, Identificador * id, bool 
   cout << "\t2 - Não" << endl;
   cout << "Sua escolha: ";
   cin >> opcao;
+  getchar();
 
   if(opcao == 2)
     return;
@@ -136,4 +144,6 @@ void CmdDescadastrar::executar(ISerUsuario * servidor, Identificador * id, bool 
     cout << "Falha no descadastramento!" << endl << endl;
   }
   
+  cout << "Pressione [Enter] para continuar >>";
+  getchar();
 }

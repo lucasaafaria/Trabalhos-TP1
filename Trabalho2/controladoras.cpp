@@ -9,6 +9,7 @@
 #include "comandos.h"
 
 bool CtrlAprAutenticacao::autenticar(Identificador * id) {
+  bool          resultado;
   string        entrada;
   Identificador identificador;
   Senha         senha;
@@ -21,9 +22,11 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
     try {
       cout << "Digite seu identificador: ";
       cin >> entrada;
+      getchar();
       identificador.setIdentificador(entrada);
       cout << "Digite sua senha: ";
       cin >> entrada;
+      getchar();
       senha.setSenha(entrada);
       break;
     }
@@ -34,10 +37,15 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
 
   id->setIdentificador(identificador.getIdentificador());
 
-  bool resultado = servidor->autenticar(identificador, senha);
+  resultado = servidor->autenticar(identificador, senha);
 
   if(resultado == false)
-    cout << "Falha na autenticação" << endl << endl;
+    cout << "Falha na autenticação." << endl << endl;
+  else
+    cout << "Usuário autenticado com sucesso!" << endl << endl;
+
+  cout << "Pressione [Enter] para continuar >>";
+  getchar();
 
   return resultado;
 }
@@ -46,7 +54,6 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
   int opcao;
   Cmd * comando;
 
-  system("clear || cls");
 
   if((*autenticado) == false){
     comando = new CmdCadastrar();
@@ -57,7 +64,9 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
 
   while(true){
     // Apresentar as opções.
-    cout << endl << "Gerenciamento de Opções:" << endl << endl;
+    system("clear || cls");
+    cout << "ID do usuário logado: " << id->getIdentificador() << endl << endl;
+    cout << "Gerenciamento de Opções:" << endl << endl;
 
     cout << EDITAR       << " - Editar"        << endl;
     cout << DESCADASTRAR << " - Descadastrar"  << endl;
@@ -83,13 +92,13 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
       default:
         if(opcao != LOGOUT)
           cout << endl << "Escolha uma opção válida!" << endl;
+        else
+          (*autenticado) = false;
         break; 
     }
 
-    if(opcao == LOGOUT || opcao == DESCADASTRAR){
-      (*autenticado) = false;
+    if(opcao == LOGOUT || (*autenticado) == false)
       break;
-    }
 
   }
 
