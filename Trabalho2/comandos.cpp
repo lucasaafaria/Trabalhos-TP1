@@ -5,9 +5,14 @@
 
 using namespace std;
 
-// Método por meio do qual é solicitada a execução do comando.
+// ------------------------------------------------------------------------- //
+// O comando a seguir coleta as informações necessárias do usuário e solicita
+// à camada de serviços o seu cadastramento
 
 void CmdCadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * autenticado) {
+  
+  // Variáveis utilizadas
+
   bool          resultado;
   string        entrada;
   Nome          nome;
@@ -35,7 +40,6 @@ void CmdCadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * a
       getline(cin, entrada);
       senha.setSenha(entrada);      
       cout << endl;
-
       break;
     }
     catch(invalid_argument &exp){
@@ -60,9 +64,14 @@ void CmdCadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * a
   getchar();
 }
 
-// Método por meio do qual é solicitada a execução do comando.
+// ------------------------------------------------------------------------- //
+// O comando a seguir coleta as novas informações do usuário e solicita
+// à camada de serviços a edição dos dados
 
 void CmdEditar::executar(ISerUsuario * servidor, Identificador * id, bool * autenticado) {
+
+  // Variáveis utilizadas
+
   bool          resultado;
   string        entrada;
   Nome          nome;
@@ -115,7 +124,9 @@ void CmdEditar::executar(ISerUsuario * servidor, Identificador * id, bool * aute
   getchar();
 }
 
-// Método por meio do qual é solicitada a execução do comando.
+// ------------------------------------------------------------------------- //
+// O comando a seguir confirma com o usuário se o mesmo deseja descadastrar-se
+// e solicita esse serviço, se for o caso.
 
 void CmdDescadastrar::executar(ISerUsuario * servidor, Identificador * id, bool * autenticado){
   bool  resultado;
@@ -147,3 +158,5 @@ void CmdDescadastrar::executar(ISerUsuario * servidor, Identificador * id, bool 
   cout << "Pressione [Enter] para continuar >>";
   getchar();
 }
+
+// ------------------------------------------------------------------------- //
