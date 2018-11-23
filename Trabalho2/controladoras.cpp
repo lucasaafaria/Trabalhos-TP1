@@ -8,11 +8,22 @@
 #include "stubs.h"
 #include "comandos.h"
 
+// Implementação dos métodos das classes controladoras da camada de apresentação
+
+// -------------------------------------------------------------------------- //
+// Método que pede as informações do usuário para realizar o login e solicita
+// serviços para realizar a autenticação. Retorna o resultado da autenticação.
+
 bool CtrlAprAutenticacao::autenticar(Identificador * id) {
+
+  // Variáveis utilizadas
+  
   bool          resultado;
   string        entrada;
   Identificador identificador;
   Senha         senha;
+
+  // Código de interação com o usuário:
 
   system("clear || cls");
   
@@ -24,6 +35,7 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
       cin >> entrada;
       getchar();
       identificador.setIdentificador(entrada);
+      
       cout << "Digite sua senha: ";
       cin >> entrada;
       getchar();
@@ -35,8 +47,10 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
     }
   }
 
+  // Informa o sistema qual o identificador do usuário logado
   id->setIdentificador(identificador.getIdentificador());
 
+  // Solicitação de serviço de autenticação
   resultado = servidor->autenticar(identificador, senha);
 
   if(resultado == false)
@@ -50,10 +64,19 @@ bool CtrlAprAutenticacao::autenticar(Identificador * id) {
   return resultado;
 }
 
+// -------------------------------------------------------------------------- //
+// Método que apresenta as opções de ações possíveis para o usuário, instancia
+// os objetos responsáveis por executá-las e dá o comando para que eles o façam.
+
 void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
+  
+  // Variáveis utilizadas
+
   int opcao;
   Cmd * comando;
 
+  // Se o usuário não está autenticado, sua única opção além de login é 
+  // cadastrar-se
 
   if((*autenticado) == false){
     comando = new CmdCadastrar();
@@ -62,8 +85,10 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
     return;
   }
 
+  // Opções para caso o usuário esteja autenticado:
+
   while(true){
-    // Apresentar as opções.
+    // Interação com o usuário
     system("clear || cls");
     cout << "ID do usuário logado: " << id->getIdentificador() << endl << endl;
     cout << "Gerenciamento de Opções:" << endl << endl;
@@ -89,6 +114,7 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
         delete comando;
         break;
 
+      // Caso de opções inválidas ou logout
       default:
         if(opcao != LOGOUT)
           cout << endl << "Escolha uma opção válida!" << endl;
@@ -97,6 +123,8 @@ void CtrlAprUsuario::executar(Identificador * id, bool * autenticado) {
         break; 
     }
 
+    // Sai da função caso a opção tenha sido logout ou caso o usuário tenha
+    // se descadastrado
     if(opcao == LOGOUT || (*autenticado) == false)
       break;
 
